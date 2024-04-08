@@ -1,12 +1,12 @@
 # Ambiente de Desenvolvimento do App Clima
 > * _Projeto desenvolvido com Node version 18.18_
 > * Para inciar, faça o git clone do projeto no seu computador
-> * Após isso, instale o expo no diretorio raiz do projeto
+> * Após isso, instale o expo no diretorio do projeto
+>
+>   `cd aplicacaomobile`
 >   
 >   `npm install expo`
-> * Finalizado a instalação do expo, vá para o diretorio da aplicação
->   
->   `cd aplicacaomobile`
+>  
 > * Instale as dependências
 >   
 >   `npm install`
