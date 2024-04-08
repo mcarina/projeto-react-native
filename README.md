@@ -1,5 +1,5 @@
 # Ambiente de Desenvolvimento do App Clima
-> * _Projeto desenvolvido com Node version 18.18_
+> * _Com Node version 18.18 ou superior_
 > * Para inciar, faça o git clone do projeto no seu computador
 > * Após isso, instale o expo no diretorio do projeto
 >
