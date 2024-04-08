@@ -12,7 +12,7 @@
 >   `npm install`
 > * Inicie o projeto
 > 
->   `npm start`
+>   `npx expo start` ou  `npm start`
 > 
 > No terminal deve aparecer um QrCode, que pode ser acessado atráves do aplicativo, Expo Go, disponivel em lojas de aplicativos do seu celular
 <br>
