@@ -19,8 +19,6 @@
 
 > [!NOTE]
 > Caso não queira instalar o Expo Go, use o emulador do android studio ou o modo desenvolvedor do seu celular e conecte ao computandor usando um cabo USB
-> 
-> ou APERTE W no seu teclado
 
 ### Referências
 [Projeto:] (https://github.com/Rodrigo322/clima-ui)
