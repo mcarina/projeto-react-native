@@ -21,9 +21,9 @@
 > Caso não queira instalar o Expo Go, use o emulador do android studio ou o modo desenvolvedor do seu celular e conecte ao computandor usando um cabo USB
 
 ### Referências
-[Projeto:] (https://github.com/Rodrigo322/clima-ui)
+[Projeto] (https://github.com/Rodrigo322/clima-ui)
 
-[Video:] (https://youtu.be/H-pJ0CM5yQ0?si=WTHFXt89nCCE53mi)
+[Video] (https://youtu.be/H-pJ0CM5yQ0?si=WTHFXt89nCCE53mi)
 
 ### React Native com Expo
 [Link] https://reactnative.dev/docs/environment-setup
