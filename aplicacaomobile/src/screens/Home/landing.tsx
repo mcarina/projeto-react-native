@@ -9,9 +9,9 @@ const Landing = () => {
       colors={['#051d38','#0f2b4a', '#051d38']}
       style={styles.gradientContainer}>
 
-      <View>
+      <View style={styles.contentContainer}>
           <CloudSun color='#FFF' size={100} />
-          <Text >26°C</Text>        
+          <Text style={styles.temperatureText}>FMF - Wyden</Text>        
       </View>
      
     </LinearGradient>
@@ -22,6 +22,15 @@ const styles = StyleSheet.create({
     gradientContainer: {
       flex: 1,
       alignItems: 'center',
+      justifyContent: 'center',
+    },
+    contentContainer: {
+      alignItems: 'center',
+    },
+    temperatureText: {
+      color: '#FFF',
+      fontSize: 24,
+      marginTop: 10,
     }
 });
 

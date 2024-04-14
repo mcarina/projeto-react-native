@@ -1,22 +1,36 @@
 import React, { useState, useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
-import Inicio from './src/screens/Home/index' // Ajuste o caminho conforme a organização de seus arquivos
-import Landing from './src/screens/Home/landing' // Ajuste o caminho conforme a organização de seus arquivos
+import { StatusBar, View, Animated } from 'react-native'
+import Inicio from './src/screens/Home/index'
+import Landing from './src/screens/Home/landing'
 
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState('Landing')
+  const [fadeAnim] = useState(new Animated.Value(0))
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrentScreen('Inicio')
-    }, 2000) // Mudar para a tela Inicio após 5 segundos
+    }, 2000)
 
-    return () => clearTimeout(timer) // Limpar o timer se o componente for desmontado
+    Animated.timing(
+      fadeAnim,
+      {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true
+      }
+    ).start();
+
+    return () => clearTimeout(timer)
   }, [])
 
   return (
     <>
-      {currentScreen === 'Landing' && <Landing />}
+      {currentScreen === 'Landing' && (
+        <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+          <Landing />
+        </Animated.View>
+      )}
       {currentScreen === 'Inicio' && <Inicio />}
       <StatusBar style="light" />
     </>
