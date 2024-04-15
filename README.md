@@ -29,5 +29,13 @@
 [Link] https://reactnative.dev/docs/environment-setup
 
 
+## Preview do Projeto "App Clima"
+
+<img  alt="Tela de inicio" width="200px" src="https://github.com/mcarina/projeto-react-native/assets/102268481/604105c6-d2e3-40c9-bec0-49e6907352df">
+<img  alt="Tela secundária" width="198px" src="https://github.com/mcarina/projeto-react-native/assets/102268481/0f6633e8-883b-4277-801d-ccfb4c11043c">
+
+
+
+
 
 
