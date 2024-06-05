@@ -25,6 +25,8 @@
 
 [Video] (https://youtu.be/H-pJ0CM5yQ0?si=WTHFXt89nCCE53mi)
 
+[Api] (https://openweathermap.org)
+
 ### React Native com Expo
 [Link] https://reactnative.dev/docs/environment-setup
 
