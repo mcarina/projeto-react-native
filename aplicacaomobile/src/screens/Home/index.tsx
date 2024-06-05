@@ -1,11 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { LinearGradient } from 'expo-linear-gradient';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { ArrowsIn, CloudSun, Drop, DropHalf, Eye, SunHorizon, Wind } from 'phosphor-react-native';
-import { Thermometer } from 'phosphor-react-native';
-import { Sun } from 'phosphor-react-native';
+import MapView, { UrlTile } from 'react-native-maps';
+import { ArrowsIn, CloudSun, Drop, DropHalf, Eye, Cloud, Wind } from 'phosphor-react-native';
 
 const Inicio = () => {
+
+  const [weatherData, setWeatherData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://api.openweathermap.org/data/2.5/weather?lat=-3.10194&lon=-60.025&appid=2ecc17c858b8f41edd131da401168ceb');
+        setWeatherData(response.data);
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const kelvinToCelsius = (temp:number) => {
+    return (temp - 273.15).toFixed(0); // Arredonda a temperatura para 2 casas decimais
+  };
+
+  const metersToKilometers = (meters:number) => {
+    return (meters / 1000).toFixed(2); // Converte metros para quilômetros e arredonda para 2 casas decimais
+  };0
+
+  const metersPerSecondToKmPerHour = (speed:number) => {
+    return (speed * 3.6).toFixed(0); // Converte m/s para km/h e arredonda para 2 casas decimais
+  };
+
   return (
     <LinearGradient 
       colors={['#051d38','#0f2b4a', '#051d38']}
@@ -14,21 +42,31 @@ const Inicio = () => {
         <View style={styles.content}>
           <View style={styles.header}>
             <View style={styles.headerLeft}>
-              <Text style={styles.headerLeftText}>Manaus</Text>
+              <Text style={styles.headerLeftText}>
+                {weatherData ? weatherData.name : 'Nome não disponível'}
+              </Text>
             </View>
           </View>
 
           <View style={styles.contentSun}>
             <Text style={styles.info}>Temperatura</Text>
             <View style={styles.infoContainer}>
-              <CloudSun color='#FFF' size={100} />
-              <Text style={styles.infoText}>26°C</Text>
+              <CloudSun color='#FFF' size={90} />
+              {/* <Text style={styles.infoText}>26°C</Text> */}
+              <Text style={styles.infoText}>
+                {weatherData ? `${kelvinToCelsius(weatherData.main.temp)}°c` : '...'}
+              </Text>
             </View>
           </View>
 
-          <Text style={styles.infoTextMaxMin}>30º/25º sensação termica de 31º</Text>
+          <Text style={styles.infoTextMaxMin}>
+              {weatherData && weatherData.main ? 
+                `${kelvinToCelsius(weatherData.main.temp_max)}º/${kelvinToCelsius(weatherData.main.temp_min)}º sensação térmica de ${kelvinToCelsius(weatherData.main.feels_like)}º` 
+                : 'Dados não disponíveis'
+            }
+        </Text>
 
-          <View style={styles.contentTable}>
+          {/* <View style={styles.contentTable}>
             <View style={styles.infoContainer2}>
               <View style={styles.rowContainer}>
                 <Thermometer color='#FFF' size={20} />
@@ -36,14 +74,14 @@ const Inicio = () => {
               </View>
               <Text style={styles.infoTextum}>A umidade fará com que a sensação de 36ºC seja alta</Text>
             </View>
-          </View>
+          </View> */}
 
           <View style={styles.Container}>
             <View style={styles.contentQuadrados}>
-              <Text style={styles.infoSen}>Indice UV</Text>
+              <Text style={styles.infoSen}>Nuvem</Text>
               <View style={styles.infoContainer}>
-                <Sun color='#FFF' size={32} />
-                <Text style={styles.infoTextum}>Baixo</Text>
+                <Cloud color='#FFF' size={32} />
+                <Text style={styles.infoTextum}>{weatherData && weatherData.weather[0].description}</Text>
               </View>
             </View>
 
@@ -51,7 +89,10 @@ const Inicio = () => {
               <Text style={styles.infoSen}>Umidade</Text>
               <View style={styles.infoContainer}>
                 <Drop color='#FFF' size={32} />
-                <Text style={styles.infoTextum}>90%</Text>
+                <Text style={styles.infoTextum}>
+                  {weatherData && weatherData.main ? `${weatherData.main.humidity}%` : 'Dados não disponíveis'}
+                </Text>
+
               </View>
             </View>
             
@@ -62,7 +103,9 @@ const Inicio = () => {
               <Text style={styles.infoSen}>Vento</Text>
               <View style={styles.infoContainer}>
                 <Wind color='#FFF' size={28} />
-                <Text style={styles.infoTextum}>5 km/h</Text>
+                <Text style={styles.infoTextum}>
+                  {weatherData && weatherData.wind ? `${metersPerSecondToKmPerHour(weatherData.wind.speed)} km/h` : 'Dados não disponíveis'}
+                </Text>
               </View>
             </View>
 
@@ -70,7 +113,9 @@ const Inicio = () => {
               <Text style={styles.infoSen}>Visibilidade</Text>
               <View style={styles.infoContainer}>
                 <Eye color='#FFF' size={28} />
-                <Text style={styles.infoTextum}>9,66 km</Text>
+                <Text style={styles.infoTextum}>
+                  {weatherData && typeof weatherData.visibility !== 'undefined' ? `${metersToKilometers(weatherData.visibility)} km` : 'Dados não disponíveis'}
+                </Text>
               </View>
             </View>
             
@@ -89,16 +134,20 @@ const Inicio = () => {
               <Text style={styles.infoSen}>Pressão</Text>
               <View style={styles.infoContainer}>
               <ArrowsIn color='#FFF' size={28} />
-                <Text style={styles.infoTextum}>1010,2 mb</Text>
+                <Text style={styles.infoTextum}>
+                  {weatherData && weatherData.main && typeof weatherData.main.pressure !== 'undefined' ? `${weatherData.main.pressure} mb` : 'Dados não disponíveis'}
+                </Text>
               </View>
             </View>
             
           </View>
 
         </View>
+
       </ScrollView>
+
       <View style={styles.footer}>
-        <Text style={styles.footerText}>Faculdade Martha Falcão, 2024</Text>
+        <Text style={styles.footerText}>Faculdade Martha Falcão, 2024 - Wyden</Text>
         <Text style={styles.footerText}></Text>
       </View>
     </LinearGradient>
@@ -106,6 +155,8 @@ const Inicio = () => {
 };
 
 const styles = StyleSheet.create({
+  containermap:{flex:1},
+  map:{flex:1},
   gradientContainer: {
     flex: 1,
     alignItems: 'center',
@@ -159,8 +210,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   infoText: {
-    fontSize: 100,
-    fontWeight: "300",
+    fontSize: 60,
+    fontWeight: "400",
     color: "#FFF",
   },
   infoContainer: {
@@ -200,13 +251,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between', 
     width: '100%', 
-    paddingHorizontal: 20,
+    paddingHorizontal: 5,
     marginBottom: 20, 
   },
   contentQuadrados: { 
     flex: 1,
     paddingTop: 10, 
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     backgroundColor: 'rgba(61, 61, 81, 0.38)',
     borderRadius: 20,
     alignItems: 'center',
